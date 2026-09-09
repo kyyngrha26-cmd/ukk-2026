@@ -4,12 +4,13 @@
 
 <div class="container">
     <h1>Kategori</h1>
+    <a href="{{ route('kategori.create') }}" class=" btn btn-primary btn-sm mb-3">Tambah Categori</a>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Keterangan</th>
-                <th></th>Aksi</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
