@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             @php
-            $no = ($data->currentPage() - 1) * $data->perPage()
+            $no = 1;
             @endphp
             @foreach ($data as $item)
                 <tr>
