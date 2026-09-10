@@ -4,11 +4,11 @@
 
 <div class="container">
     <h1>Kategori</h1>
-    <a href="{{ route('kategori.create') }}" class=" btn btn-primary btn-sm mb-3">Tambah Categori</a>
+    <a href="{{ route('kategori.create') }}" class=" btn btn-primary btn-sm mb-3">Tambah Kategori</a>
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>No</th>
+                <th>ID</th>
                 <th>Keterangan</th>
                 <th>Aksi</th>
             </tr>
@@ -17,13 +17,16 @@
             @php
             $no = 1;
             @endphp
-            @foreach ($data as $item)
+            @foreach ($data as $kategori)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $item->keterangan }}</td>
+                    <td>{{ $kategori->keterangan }}</td>
                     <td>
-                      <a href="" class="btn btn-success btn-sm">Edit</a>
-                      <a href="" class="btn btn-danger btn-sm">Delete</a>
+                      <a href="{{ route('admin.kategori.edit', ['id_kategori' => $kategori->id_kategori]) }}" class="btn btn-warning btn-sm">Edit</a>
+                       <form action="{{ route('admin.kategori.delete', ['id_kategori' => $kategori->id_kategori]) }}" method="POST=" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">Hapus</button>
                     </td>
                 </tr>
             @endforeach
