@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+
 <h1>Tambah Kategori</h1>
-<form action="{{ route('kategori.store') }}" method="POST" class="d-flex flex-column gap-2">
+<form action="{{ route('kategori.store') }}" method="POST">
     @csrf
-    <label>Keterangan</label>
-    <input type="text" name="keterangan" id="keterangan" class="form-control" value="{{ old('keterangan') }}" required>
+    <div class="form-group mb-3">
+        <label>nama kategori</label>
+        <input type="text" name="nama_kategori" class="form-control">
+    </div>
     <button type="submit" class="btn btn-primary">Simpan</button>
 </form>
-@endsection
+
+@endsection   
