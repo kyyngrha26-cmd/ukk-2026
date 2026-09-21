@@ -1,12 +1,12 @@
-﻿/*
+/*
 | Lapisan tema di atas Bootstrap.
 | Bootstrap dimuat lebih dulu, file ini hanya menimpa seperlunya.
 */
 
 :root {
-    --brand: #c2410c;
-    --brand-dark: #9a3412;
-    --brand-subtle: #fff7ed;
+    --brand: #11e90e;
+    --brand-dark: #67d70c;
+    --brand-subtle: #ff2f00;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
     height: 30px;
     border-radius: 8px;
     background: var(--brand);
-    color: #fff;
+    color: #23ec10;
     font-size: 15px;
     font-weight: 700;
 }

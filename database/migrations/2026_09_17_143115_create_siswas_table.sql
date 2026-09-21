@@ -1,6 +1,6 @@
 -- create_siswas_table
 
-CREATE TABLE IF NOT EXISTS `siswas` (
+CREATE TABLE IF NOT EXISTS `siswa` (
     id_siswa         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_user          INT UNSIGNED NOT NULL,
     nis              VARCHAR(20) NOT NULL,
