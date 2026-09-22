@@ -57,7 +57,7 @@
                 <ul class="list-unstyled mb-0 text-start">
                     <li class="mb-3 d-flex align-items-start">
                         <span class="badge bg-warning text-dark rounded-circle me-2 step-badge">1</span>
-                        <span>Klik tombol <strong>Buat Pengaduan Baru</strong>.</span>
+                        <span>Klik tombol <strong>login Unruk Memulai</strong>.</span>
                     </li>
                     <li class="mb-3 d-flex align-items-start">
                         <span class="badge bg-warning text-dark rounded-circle me-2 step-badge">2</span>
@@ -77,7 +77,7 @@
 
             <div class="row text-center mt-5 g-4">
                  <div class="col-md-4">
-                 <h2 class="fw-bold text-brand">150+</h2>
+                 <h2 class="fw-bold text-brand">0</h2>
                  <p class="text-secondary mb-0">Pengaduan Terselesaikan</p>
              </div>
              <div class="col-md-4">
@@ -85,7 +85,7 @@
                  <p class="text-secondary mb-0">Respon Cepat</p>
              </div>
                  <div class="col-md-4">
-                 <h2 class="fw-bold text-brand">10+</h2>
+                 <h2 class="fw-bold text-brand">0</h2>
                   <p class="text-secondary mb-0">Kategori Sarana</p>
             </div>
          </div>
