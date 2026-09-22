@@ -69,7 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
     Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
     Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
-    Route::delete('/pengguna/{pengguna', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+    Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
     });
 
 /*
