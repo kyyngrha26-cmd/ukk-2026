@@ -37,10 +37,20 @@ class AspirasiController extends Controller
         ]);
 
         $namaFoto = null;
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $namaFoto = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/aspirasi'), $namaFoto);
+
+        // Proses Upload File
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES['foto'];
+            $namaFoto = time() . '_' . basename($file['name']);
+            
+            // Menggunakan \public_path() atau path absolut server
+            $targetDir = function_exists('public_path') ? \public_path('uploads/aspirasi/') : __DIR__ . '/../../public/uploads/aspirasi/';
+            
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            move_uploaded_file($file['tmp_name'], $targetDir . $namaFoto);
         }
 
         Aspirasi::create([
@@ -76,15 +86,24 @@ class AspirasiController extends Controller
         $aspirasi = Aspirasi::where('id_aspirasi', $id)->first();
         $namaFoto = $aspirasi->foto;
 
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($aspirasi->foto && file_exists(public_path('uploads/aspirasi/' . $aspirasi->foto))) {
-                unlink(public_path('uploads/aspirasi/' . $aspirasi->foto));
+        $targetDir = function_exists('public_path') ? \public_path('uploads/aspirasi/') : __DIR__ . '/../../public/uploads/aspirasi/';
+
+        // Proses Update File
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            // Hapus foto lama jika ada di server
+            if ($aspirasi->foto && file_exists($targetDir . $aspirasi->foto)) {
+                unlink($targetDir . $aspirasi->foto);
             }
 
-            $file = $request->file('foto');
-            $namaFoto = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/aspirasi'), $namaFoto);
+            $file = $_FILES['foto'];
+            $namaFoto = time() . '_' . basename($file['name']);
+            
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Pindahkan file baru
+            move_uploaded_file($file['tmp_name'], $targetDir . $namaFoto);
         }
 
         $aspirasi->update([
@@ -101,10 +120,11 @@ class AspirasiController extends Controller
     public function destroy(Request $request, $id)
     {
         $aspirasi = Aspirasi::where('id_aspirasi', $id)->first();
+        $targetDir = function_exists('public_path') ? \public_path('uploads/aspirasi/') : __DIR__ . '/../../public/uploads/aspirasi/';
 
         if ($aspirasi) {
-            if ($aspirasi->foto && file_exists(public_path('uploads/aspirasi/' . $aspirasi->foto))) {
-                unlink(public_path('uploads/aspirasi/' . $aspirasi->foto));
+            if ($aspirasi->foto && file_exists($targetDir . $aspirasi->foto)) {
+                unlink($targetDir . $aspirasi->foto);
             }
             $aspirasi->delete();
         }
