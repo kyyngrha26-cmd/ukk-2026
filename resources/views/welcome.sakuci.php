@@ -1,6 +1,9 @@
-<?php
+@php
     $totalAlat = \App\Models\Alat::count();
-    $semuaKategori = \App\Models\Kategori::all(); // Diubah dari $totalKategori jadi $semuaKategori
+    $totalAspirasi = \App\Models\Aspirasi::count(); // Tambahkan ini untuk menghitung total aspirasi/pengaduan
+    $totalKategori = \App\Models\Kategori::count();
+
+    $semuaKategori = \App\Models\Kategori::all();
     $kategoriChart = [];
 
     foreach ($semuaKategori as $d) {
@@ -10,7 +13,9 @@
 
     usort($kategoriChart, fn($a, $b) => $b['jumlah'] <=> $a['jumlah']);
     $maxjumlah = $kategoriChart ? max(array_column($kategoriChart, 'jumlah')) : 0;
-?>
+@endphp
+
+
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' - Beranda')
