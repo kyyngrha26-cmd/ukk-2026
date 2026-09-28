@@ -1,38 +1,95 @@
 /*
-| Lapisan tema di atas Bootstrap.
+| Lapisan tema di atas Bootstrap 5.
 | Bootstrap dimuat lebih dulu, file ini hanya menimpa seperlunya.
 */
 
+/* --------------------------------------------------
+ * 1. Variabel Mode Terang (Light Mode - Default)
+ * -------------------------------------------------- */
 :root {
-    --brand: #11e90e;
-    --brand-dark: #67d70c;
-    --brand-subtle: #ff2f00;
+    --brand: #10b981;             /* Emerald Green yang segar & modern */
+    --brand-dark: #059669;        /* Hijau lebih gelap untuk hover/active */
+    --brand-subtle: #d1fae5;      /* Hijau lembut untuk background badge/step */
+    --brand-text: #065f46;        /* Teks kontras di atas bg-subtle */
+    
+    --brand-mark-bg: var(--brand);
+    --brand-mark-color: #ffffff;
+}
+
+/* --------------------------------------------------
+ * 2. Variabel Mode Gelap (Dark Mode - Bootstrap Data Attribute)
+ * -------------------------------------------------- */
+[data-bs-theme="dark"] {
+    --brand: #34d399;             /* Hijau sedikit lebih cerah agar menonjol di dark mode */
+    --brand-dark: #10b981;
+    --brand-subtle: rgba(52, 211, 153, 0.15); /* Transparan hijau elegan */
+    --brand-text: #6ee7b7;
+    
+    --brand-mark-bg: rgba(52, 211, 153, 0.2);
+    --brand-mark-color: var(--brand);
 }
 
 body {
     font-size: 15.5px;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Logo kotak di navbar */
+/* --------------------------------------------------
+ * 3. Branding & Logo Navbar
+ * -------------------------------------------------- */
 .brand-mark {
     display: grid;
     place-items: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 8px;
-    background: var(--brand);
-    color: #23ec10;
+    background: var(--brand-mark-bg);
+    color: var(--brand-mark-color);
     font-size: 15px;
     font-weight: 700;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* Navbar -- link aktif vs non-aktif */
+/* Toggle Logo Tema Gelap/Terang */
+.logo-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    line-height: 0;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+    cursor: pointer;
+}
+
+.logo-toggle:hover {
+    transform: scale(1.08);
+}
+
+.logo-toggle:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
+.logo-ring {
+    fill: #1e293b;
+    transition: fill 0.2s ease;
+}
+
+[data-bs-theme="dark"] .logo-ring {
+    fill: #f8fafc;
+}
+
+/* --------------------------------------------------
+ * 4. Navigasi (Navbar Nav Links)
+ * -------------------------------------------------- */
 .navbar-nav .nav-link {
     position: relative;
     font-weight: 500;
     color: var(--bs-secondary-color);
-    padding-block: .5rem;
-    transition: color .15s ease;
+    padding-block: 0.5rem;
+    transition: color 0.15s ease;
 }
 
 .navbar-nav .nav-link:hover {
@@ -47,51 +104,24 @@ body {
 .navbar-nav .nav-link.active::after {
     content: "";
     position: absolute;
-    left: .5rem;
-    right: .5rem;
+    left: 0.5rem;
+    right: 0.5rem;
     bottom: 0;
-    height: 2px;
+    height: 2.5px;
     border-radius: 2px;
     background: var(--brand);
 }
 
-/* Logo navbar merangkap tombol toggle tema gelap/terang. Titik tengah
-   (hijau/merah) tetap menunjukkan status koneksi database seperti biasa;
-   cincin luarnya yang berubah warna mengikuti tema aktif. */
-.logo-toggle {
-    display: inline-flex;
-    flex: 0 0 auto;
-    border: 0;
-    background: transparent;
-    padding: 0;
-    line-height: 0;
-    border-radius: 50%;
-    transition: transform .15s ease;
-}
-
-.logo-toggle:hover {
-    transform: scale(1.06);
-}
-
-.logo-toggle:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: 2px;
-}
-
-.logo-ring {
-    fill: #000000;
-    transition: fill .15s ease;
-}
-
-[data-bs-theme="dark"] .logo-ring {
-    fill: #ffffff;
-}
-
-/* Tombol warna khas Sakuci */
+/* --------------------------------------------------
+ * 5. Tombol & Badge
+ * -------------------------------------------------- */
 .btn-brand {
     background-color: var(--brand);
     border-color: var(--brand);
-    color: #fff;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-brand:hover,
@@ -99,66 +129,140 @@ body {
 .btn-brand:active {
     background-color: var(--brand-dark);
     border-color: var(--brand-dark);
-    color: #fff;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
 }
 
 .btn-outline-brand {
     border-color: var(--brand);
     color: var(--brand);
+    border-radius: 10px;
+    transition: all 0.25s ease;
 }
 
 .btn-outline-brand:hover {
     background-color: var(--brand);
-    color: #fff;
+    border-color: var(--brand);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
 }
 
-.text-brand   { color: var(--brand) !important; }
-.bg-brand-subtle { background-color: var(--brand-subtle) !important; }
+.text-brand { 
+    color: var(--brand) !important; 
+}
+
+.bg-brand-subtle { 
+    background-color: var(--brand-subtle) !important; 
+}
 
 .badge-brand {
     background-color: var(--brand-subtle);
-    color: var(--brand-dark);
+    color: var(--brand-text);
     font-weight: 600;
+    padding: 0.4em 0.8em;
+    border-radius: 50rem;
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-/* Blok kode */
+/* --------------------------------------------------
+ * 6. Komponen Card & Step (Halaman Welcome / Beranda)
+ * -------------------------------------------------- */
+.card-info {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    border-radius: 16px;
+}
+
+.card-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+    border-color: var(--brand) !important;
+}
+
+[data-bs-theme="dark"] .card-info:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 15px rgba(52, 211, 153, 0.15) !important;
+}
+
+.step-number,
+.step-badge {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    background: var(--brand-subtle);
+    color: var(--brand-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.feature-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 0 auto 1rem auto;
+    transition: transform 0.2s ease;
+}
+
+.card-info:hover .feature-icon {
+    transform: scale(1.08);
+}
+
+/* --------------------------------------------------
+ * 7. Blok Kode (Pre & Code)
+ * -------------------------------------------------- */
 pre.code {
     margin: 0;
     padding: 16px;
     border-radius: 10px;
     background: #0f172a;
     color: #e2e8f0;
-    font: 12.5px/1.7 ui-monospace, Consolas, "Courier New", monospace;
+    font: 12.5px/1.7 ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
     overflow-x: auto;
+    border: 1px solid #1e293b;
 }
 
-pre.code .cmt { color: #64748b; }
+pre.code .cmt { 
+    color: #64748b; 
+}
 
 code.inline {
     padding: 2px 6px;
     border-radius: 5px;
-    background: #eef0f2;
+    background: rgba(15, 23, 42, 0.06);
     color: #0f172a;
     font-size: 0.875em;
 }
 
-/* Nomor langkah */
-.step-number {
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--brand-subtle);
-    color: var(--brand-dark);
-    font-size: 13px;
-    font-weight: 700;
+[data-bs-theme="dark"] code.inline {
+    background: rgba(241, 245, 249, 0.1);
+    color: #f1f5f9;
 }
 
-/* Kotak pratinjau komponen di halaman /docs */
+[data-bs-theme="dark"] pre.code {
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+    border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] pre.code .cmt {
+    color: var(--bs-secondary-color);
+}
+
+/* --------------------------------------------------
+ * 8. Dokumentasi & Demo Preview
+ * -------------------------------------------------- */
 .demo-preview {
-    border: 1px dashed #cbd5e1;
+    border: 1px dashed var(--bs-border-color);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -168,91 +272,44 @@ code.inline {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .05em;
-    color: #64748b;
-    background: #f1f5f9;
+    color: var(--bs-secondary-color);
+    background: var(--bs-tertiary-bg);
     padding: 6px 12px;
-    border-bottom: 1px dashed #cbd5e1;
+    border-bottom: 1px dashed var(--bs-border-color);
 }
 
 .demo-preview-body {
     padding: 18px;
-    background: #fff;
+    background: var(--bs-body-bg);
 }
 
-/* Kotak warna untuk contoh grid & spacing di /docs */
 .demo-box {
     padding: .6rem .5rem;
     background: var(--brand-subtle);
-    border: 1px solid #fdba8c;
+    border: 1px solid var(--brand);
     border-radius: 6px;
-    color: var(--brand-dark);
+    color: var(--brand-text);
     font-size: .8rem;
     font-weight: 600;
     text-align: center;
 }
 
 .demo-box-alt {
-    background: #eef2ff;
-    border-color: #c7d2fe;
-    color: #3730a3;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #6366f1;
 }
 
-/* Halaman error */
+[data-bs-theme="dark"] .demo-box-alt {
+    background: rgba(129, 140, 248, 0.15);
+    border-color: rgba(129, 140, 248, 0.3);
+    color: #a5b4fc;
+}
+
+/* Halaman Error */
 .error-code {
     font-size: 72px;
     font-weight: 800;
     line-height: 1;
     color: var(--brand);
 }
-
-/* Varian tema gelap untuk komponen yang warnanya di-hardcode di atas */
-[data-bs-theme="dark"] code.inline {
-    background: #1e293b;
-    color: #e2e8f0;
-}
-
-/* pre.code sengaja navy gelap di mode terang (biar kontras) -- tapi di mode
-   gelap dia harus ikut warna permukaan Bootstrap, bukan navy sendiri. */
-[data-bs-theme="dark"] pre.code {
-    background: var(--bs-tertiary-bg);
-    color: var(--bs-body-color);
-    border: 1px solid var(--bs-border-color);
-}
-
-[data-bs-theme="dark"] pre.code .cmt {
-    color: var(--bs-secondary-color);
-}
-
-[data-bs-theme="dark"] .demo-preview {
-    border-color: #334155;
-}
-
-[data-bs-theme="dark"] .demo-preview-label {
-    background: #1e293b;
-    color: #94a3b8;
-    border-color: #334155;
-}
-
-[data-bs-theme="dark"] .demo-preview-body {
-    background: var(--bs-body-bg);
-}
-
-[data-bs-theme="dark"] .badge-brand,
-[data-bs-theme="dark"] .bg-brand-subtle,
-[data-bs-theme="dark"] .step-number {
-    background-color: rgba(194, 65, 12, .18) !important;
-    color: #fb923c;
-}
-
-[data-bs-theme="dark"] .demo-box {
-    background-color: rgba(194, 65, 12, .18);
-    border-color: rgba(194, 65, 12, .4);
-    color: #fb923c;
-}
-
-[data-bs-theme="dark"] .demo-box-alt {
-    background-color: rgba(99, 102, 241, .18);
-    border-color: rgba(99, 102, 241, .4);
-    color: #a5b4fc;
-}
-

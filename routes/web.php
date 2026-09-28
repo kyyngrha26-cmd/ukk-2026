@@ -9,6 +9,7 @@ use App\Controllers\Core\UserController;
 use App\Controllers\KategoriController;
 use App\Controllers\PenggunaController;
 use App\Controllers\AlatController;
+use App\Controllers\AspirasiController;
 use Sakuci\Route;
 
 /*
@@ -78,6 +79,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/alat/{alat}/edit', [AlatController::class, 'edit'])->name('alat.edit');
     Route::put('/alat/{alat}', [AlatController::class, 'update'])->name('alat.update');
     Route::delete('/alat/{alat}', [AlatController::class, 'destroy'])->name('alat.destroy');
+
+    Route::get('/aspirasi', [AspirasiController::class, 'index'])->name('aspirasi.index');
+    Route::get('/aspirasi/create', [AspirasiController::class, 'create'])->name('aspirasi.create');
+    Route::post('/aspirasi', [AspirasiController::class, 'store'])->name('aspirasi.store');
+    Route::get('/aspirasi/{id_aspirasi}/edit', [AspirasiController::class, 'edit'])->name('aspirasi.edit');
+    Route::put('/aspirasi/{id_aspirasi}', [AspirasiController::class, 'update'])->name('aspirasi.update');
+    Route::delete('/aspirasi/{id_aspirasi}', [AspirasiController::class, 'destroy'])->name('aspirasi.destroy');
     });
 
 /*
