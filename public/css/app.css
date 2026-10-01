@@ -1,18 +1,18 @@
 /*
 | Lapisan tema di atas Bootstrap 5.
-| Bootstrap dimuat lebih dulu, file ini hanya menimpa seperlunya.
+| Skema Warna: Electric Indigo / Vibrant Purple
 */
 
 /* --------------------------------------------------
  * 1. Variabel Mode Terang (Light Mode - Default)
  * -------------------------------------------------- */
 :root {
-    --brand: #10b981;             /* Emerald Green yang segar & modern */
-    --brand-dark: #059669;        /* Hijau lebih gelap untuk hover/active */
-    --brand-subtle: #d1fae5;      /* Hijau lembut untuk background badge/step */
-    --brand-text: #065f46;        /* Teks kontras di atas bg-subtle */
+    --brand: #6366f1;             /* Electric Indigo - Modern, cerah, & profesional */
+    --brand-dark: #4f46e5;        /* Indigo gelap untuk state hover/active */
+    --brand-subtle: #e0e7ff;      /* Indigo lembut untuk background badge/step */
+    --brand-text: #3730a3;        /* Teks kontras tinggi di atas bg-subtle */
     
-    --brand-mark-bg: var(--brand);
+    --brand-mark-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     --brand-mark-color: #ffffff;
 }
 
@@ -20,13 +20,13 @@
  * 2. Variabel Mode Gelap (Dark Mode - Bootstrap Data Attribute)
  * -------------------------------------------------- */
 [data-bs-theme="dark"] {
-    --brand: #34d399;             /* Hijau sedikit lebih cerah agar menonjol di dark mode */
-    --brand-dark: #10b981;
-    --brand-subtle: rgba(52, 211, 153, 0.15); /* Transparan hijau elegan */
-    --brand-text: #6ee7b7;
+    --brand: #818cf8;             /* Indigo cerah ber-neon lembut agar kontras di latar gelap */
+    --brand-dark: #6366f1;
+    --brand-subtle: rgba(99, 102, 241, 0.2); /* Transparan indigo elegan */
+    --brand-text: #c7d2fe;
     
-    --brand-mark-bg: rgba(52, 211, 153, 0.2);
-    --brand-mark-color: var(--brand);
+    --brand-mark-bg: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+    --brand-mark-color: #ffffff;
 }
 
 body {
@@ -40,14 +40,19 @@ body {
 .brand-mark {
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
     background: var(--brand-mark-bg);
     color: var(--brand-mark-color);
     font-size: 15px;
     font-weight: 700;
-    transition: background 0.2s ease, color 0.2s ease;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.brand-mark:hover {
+    transform: scale(1.05);
 }
 
 /* Toggle Logo Tema Gelap/Terang */
@@ -107,17 +112,18 @@ body {
     left: 0.5rem;
     right: 0.5rem;
     bottom: 0;
-    height: 2.5px;
-    border-radius: 2px;
+    height: 3px;
+    border-radius: 3px;
     background: var(--brand);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
 
 /* --------------------------------------------------
  * 5. Tombol & Badge
  * -------------------------------------------------- */
 .btn-brand {
-    background-color: var(--brand);
-    border-color: var(--brand);
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+    border: none;
     color: #ffffff !important;
     font-weight: 600;
     border-radius: 10px;
@@ -127,16 +133,16 @@ body {
 .btn-brand:hover,
 .btn-brand:focus,
 .btn-brand:active {
-    background-color: var(--brand-dark);
-    border-color: var(--brand-dark);
+    background: linear-gradient(135deg, var(--brand-dark) 0%, #3730a3 100%);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 8px 22px rgba(99, 102, 241, 0.4);
 }
 
 .btn-outline-brand {
-    border-color: var(--brand);
+    border: 2px solid var(--brand);
     color: var(--brand);
+    font-weight: 600;
     border-radius: 10px;
     transition: all 0.25s ease;
 }
@@ -146,7 +152,7 @@ body {
     border-color: var(--brand);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
 }
 
 .text-brand { 
@@ -161,9 +167,9 @@ body {
     background-color: var(--brand-subtle);
     color: var(--brand-text);
     font-weight: 600;
-    padding: 0.4em 0.8em;
+    padding: 0.45em 0.85em;
     border-radius: 50rem;
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
 /* --------------------------------------------------
@@ -178,12 +184,12 @@ body {
 
 .card-info:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 14px 30px rgba(99, 102, 241, 0.15) !important;
     border-color: var(--brand) !important;
 }
 
 [data-bs-theme="dark"] .card-info:hover {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 15px rgba(52, 211, 153, 0.15) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(129, 140, 248, 0.2) !important;
 }
 
 .step-number,
@@ -191,9 +197,9 @@ body {
     display: grid;
     place-items: center;
     flex: 0 0 auto;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
     border-radius: 50%;
     background: var(--brand-subtle);
     color: var(--brand-text);
@@ -202,19 +208,23 @@ body {
 }
 
 .feature-icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--brand-subtle);
+    color: var(--brand);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.6rem;
     margin: 0 auto 1rem auto;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .card-info:hover .feature-icon {
-    transform: scale(1.08);
+    transform: scale(1.1) rotate(4deg);
+    background: var(--brand);
+    color: #ffffff;
 }
 
 /* --------------------------------------------------
@@ -223,12 +233,13 @@ body {
 pre.code {
     margin: 0;
     padding: 16px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #0f172a;
     color: #e2e8f0;
     font: 12.5px/1.7 ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
     overflow-x: auto;
     border: 1px solid #1e293b;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 pre.code .cmt { 
@@ -236,16 +247,12 @@ pre.code .cmt {
 }
 
 code.inline {
-    padding: 2px 6px;
-    border-radius: 5px;
-    background: rgba(15, 23, 42, 0.06);
-    color: #0f172a;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: var(--brand-subtle);
+    color: var(--brand-text);
     font-size: 0.875em;
-}
-
-[data-bs-theme="dark"] code.inline {
-    background: rgba(241, 245, 249, 0.1);
-    color: #f1f5f9;
+    font-weight: 600;
 }
 
 [data-bs-theme="dark"] pre.code {
@@ -263,7 +270,7 @@ code.inline {
  * -------------------------------------------------- */
 .demo-preview {
     border: 1px dashed var(--bs-border-color);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
 }
 
@@ -287,7 +294,7 @@ code.inline {
     padding: .6rem .5rem;
     background: var(--brand-subtle);
     border: 1px solid var(--brand);
-    border-radius: 6px;
+    border-radius: 8px;
     color: var(--brand-text);
     font-size: .8rem;
     font-weight: 600;
@@ -295,21 +302,23 @@ code.inline {
 }
 
 .demo-box-alt {
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: #6366f1;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #8b5cf6;
 }
 
 [data-bs-theme="dark"] .demo-box-alt {
-    background: rgba(129, 140, 248, 0.15);
-    border-color: rgba(129, 140, 248, 0.3);
-    color: #a5b4fc;
+    background: rgba(167, 139, 250, 0.15);
+    border-color: rgba(167, 139, 250, 0.3);
+    color: #c4b5fd;
 }
 
 /* Halaman Error */
 .error-code {
-    font-size: 72px;
-    font-weight: 800;
+    font-size: 76px;
+    font-weight: 900;
     line-height: 1;
-    color: var(--brand);
+    background: linear-gradient(135deg, var(--brand) 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

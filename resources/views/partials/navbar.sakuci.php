@@ -15,14 +15,13 @@
 <header class="navbar navbar-expand bg-body border-bottom sticky-top shadow-sm py-2 px-3">
     <div class="container-fluid">
         <div class="d-flex align-items-center gap-2">
-            {{-- Tombol Buka Sidebar Menu (Garis 3 / Hamburger Menu - Warna Responsif) --}}
+            {{-- Tombol Buka Sidebar Menu (Garis 3 / Hamburger Menu) --}}
             <button class="btn btn-outline-secondary border-0 d-flex align-items-center justify-content-center p-2 rounded-3 text-body" 
                     type="button" 
                     data-bs-toggle="offcanvas" 
                     data-bs-target="#sidebarMenu" 
                     aria-controls="sidebarMenu"
                     aria-label="Buka Menu Sidebar">
-                {{-- SVG Garis 3 (Hamburger Icon) --}}
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -30,16 +29,16 @@
                 </svg>
             </button>
 
-            {{-- Nama Aplikasi (Kontras Otomatis) --}}
+            {{-- Nama Aplikasi --}}
             <a class="navbar-brand fw-bold m-0 d-flex flex-column text-body ms-1" href="{{ route('home') }}">
                 <span class="fs-6 d-block lh-1 fw-bold text-body">{{ config('app.name') }}</span>
                 <small class="text-body-secondary fw-normal mt-1" style="font-size: 0.7rem;">Sarana & Prasarana</small>
             </a>
         </div>
 
-        {{-- Aksi Kanan Topbar (Tombol Tema & Tombol Masuk) --}}
+        {{-- Aksi Kanan Topbar --}}
         <div class="ms-auto d-flex align-items-center gap-2">
-            {{-- Tombol Ganti Tema Mode Terang/Gelap --}}
+            {{-- Tombol Ganti Tema --}}
             <button id="themeToggle" type="button" class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center p-2 text-body" 
                     title="Ganti Tema Terang/Gelap" style="width: 36px; height: 36px;">
                 <i class="bi bi-moon-stars fs-6"></i>
@@ -59,7 +58,7 @@
     </div>
 </header>
 
-{{-- Drawer Sidebar Offcanvas (Melayang tanpa merusak tata letak web) --}}
+{{-- Drawer Sidebar Offcanvas --}}
 <div class="offcanvas offcanvas-start bg-body text-body border-end" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="width: 280px;">
     
     {{-- Header Sidebar --}}
@@ -81,28 +80,43 @@
                     <span class="fw-medium">Beranda</span>
                 </a>
             </li>
+
+            {{-- Menu Kategori HANYA TAMPIL UNTUK ADMIN --}}
+            @if ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('kategori.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('kategori.index') }}">
+                        <i class="bi bi-grid fs-5"></i>
+                        <span class="fw-medium">Kategori</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- Menu Pengguna HANYA TAMPIL UNTUK ADMIN --}}
+            @if ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('pengguna.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('pengguna.index') }}">
+                        <i class="bi bi-people fs-5"></i>
+                        <span class="fw-medium">Pengguna</span>
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('kategori.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('kategori.index') }}">
-                    <i class="bi bi-grid fs-5"></i>
-                    <span class="fw-medium">Kategori</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('pengguna.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('pengguna.index') }}">
-                    <i class="bi bi-people fs-5"></i>
-                    <span class="fw-medium">Pengguna</span>
-                </a>
-            </li>
-             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('alat.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('alat.index') }}">
                     <i class="bi bi-tools fs-5"></i>
-                    
                     <span class="fw-medium">Alat</span>
                 </a>
             </li>
-             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('aspirasi.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('aspirasi.index') }}">
-                    <i class="bi bi-bar-chart"></i>
+
+            {{-- Menu Aspirasi --}}
+            <li class="nav-item">
+                @php
+                    $aspirasiRoute = ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin') 
+                        ? route('admin.aspirasi.index') 
+                        : route('aspirasi.index');
+                @endphp
+                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('aspirasi.index', 'admin.aspirasi.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ $aspirasiRoute }}">
+                    <i class="bi bi-chat-left-text fs-5"></i>
                     <span class="fw-medium">Aspirasi</span>
                 </a>
             </li>
@@ -110,8 +124,8 @@
             @if ($currentUser)
                 <div class="my-2 border-top"></div>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('admin.dashboard', 'dashboard') ? 'active fw-semibold' : 'text-body hover-bg' }}"
-                       href="{{ $currentUser->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}">
+                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('admin.dashboard', 'dashboard', 'siswa.dashboard') ? 'active fw-semibold' : 'text-body hover-bg' }}"
+                       href="{{ isset($currentUser->role) && $currentUser->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}">
                         <i class="bi bi-speedometer2 fs-5"></i>
                         <span class="fw-medium">Dashboard</span>
                     </a>
@@ -119,7 +133,7 @@
             @endif
         </ul>
 
-        {{-- Footer Sidebar (Sistem Login / Register / Logout) --}}
+        {{-- Footer Sidebar --}}
         <div class="border-top pt-3 mt-3">
             @if ($currentUser)
                 <div class="mb-3 px-2 d-flex align-items-center gap-2">

@@ -15,7 +15,6 @@
     $maxjumlah = $kategoriChart ? max(array_column($kategoriChart, 'jumlah')) : 0;
 @endphp
 
-
 @extends('layouts.app')
 
 @section('title', config('app.name') . ' - Beranda')
@@ -46,7 +45,7 @@
         </div>
     </div>
 
-    {{-- Akses Cepat Menu Utama (Alat & Kategori) --}}
+    {{-- Akses Cepat Menu Utama (Alat, Kategori, & Aspirasi) --}}
     <div class="container mb-5">
         <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
             <i class="bi bi-grid-1x2-fill text-brand fs-5"></i>
@@ -55,7 +54,7 @@
 
         <div class="row g-4 justify-content-center">
             {{-- Card Alat & Fasilitas --}}
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="card card-info p-3 text-center h-100">
                     <div class="card-body d-flex flex-column align-items-center">
                         <div class="feature-icon bg-brand-subtle text-brand">
@@ -71,7 +70,7 @@
             </div>
 
             {{-- Card Kategori Sarana --}}
-            <div class="col-md-5 col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <div class="card card-info p-3 text-center h-100">
                     <div class="card-body d-flex flex-column align-items-center">
                         <div class="feature-icon bg-warning bg-opacity-10 text-warning">
@@ -81,6 +80,22 @@
                         <p class="card-text text-secondary small mb-4">Kelompokkan fasilitas berdasarkan jenis, ruangan, dan unit bangunan sekolah.</p>
                         <a href="{{ route('kategori.index') }}" class="btn btn-outline-brand btn-sm mt-auto w-100">
                             <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Kategori
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Card Laporkan Aspirasi (Fitur Baru) --}}
+            <div class="col-md-4 col-sm-6">
+                <div class="card card-info p-3 text-center h-100">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <div class="feature-icon bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-chat-square-text-fill"></i>
+                        </div>
+                        <h5 class="fw-bold card-title mb-2">Laporkan Aspirasi</h5>
+                        <p class="card-text text-secondary small mb-4">Sampaikan pengaduan, masukan, atau usulan kerusakan sarana prasarana secara langsung.</p>
+                        <a href="{{ route('aspirasi.create') }}" class="btn btn-outline-brand btn-sm mt-auto w-100">
+                            <i class="bi bi-pencil-square me-1"></i> Buat Laporan
                         </a>
                     </div>
                 </div>
