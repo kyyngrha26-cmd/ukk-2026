@@ -45,11 +45,11 @@
             </button>
 
             @if ($currentUser)
-                <span class="badge bg-body-tertiary text-body border px-3 py-2 d-none d-sm-inline-flex align-items-center gap-1.5 fw-semibold">
+                <span class="badge bg-body-tertiary text-body border px-3 py-2 d-none d-sm-inline-flex align-items-center gap-2 fw-semibold">
                     <i class="bi bi-person-circle text-primary"></i> {{ $currentUser->username }}
                 </span>
             @else
-                <a class="btn btn-sm btn-primary rounded-pill px-3.5 d-inline-flex align-items-center gap-1.5 shadow-sm py-1.5 fw-semibold" href="{{ route('login') }}">
+                <a class="btn btn-sm btn-primary rounded-pill px-3 d-inline-flex align-items-center gap-2 shadow-sm py-2 fw-semibold" href="{{ route('login') }}">
                     <i class="bi bi-box-arrow-in-right"></i>
                     <span>Masuk</span>
                 </a>
@@ -73,20 +73,26 @@
     {{-- Body / Menu Navigasi Sidebar --}}
     <div class="offcanvas-body d-flex flex-column justify-content-between p-3">
         
-        <ul class="nav nav-pills flex-column gap-1">
+        <ul class="nav nav-pills flex-column gap-2">
+        
+          {{-- SEKSI 1: NAVIGASI UTAMA --}}
+            <li class="nav-item mb-1">
+                <small class="text-uppercase text-body-secondary fw-bold px-2 mb-1 d-block" style="font-size: 0.68rem; letter-spacing: 0.5px;">Navigasi Utama</small>
+            </li>
+
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('home') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('home') }}">
+                <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('home') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('home') }}">
                     <i class="bi bi-house-door fs-5"></i>
-                    <span class="fw-medium">Beranda</span>
+                    <span>Beranda</span>
                 </a>
             </li>
 
             {{-- Menu Kategori HANYA TAMPIL UNTUK ADMIN --}}
             @if ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin')
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('kategori.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('kategori.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('kategori.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('kategori.index') }}">
                         <i class="bi bi-grid fs-5"></i>
-                        <span class="fw-medium">Kategori</span>
+                        <span>Kategori</span>
                     </a>
                 </li>
             @endif
@@ -94,40 +100,47 @@
             {{-- Menu Pengguna HANYA TAMPIL UNTUK ADMIN --}}
             @if ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin')
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('pengguna.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('pengguna.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('pengguna.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('pengguna.index') }}">
                         <i class="bi bi-people fs-5"></i>
-                        <span class="fw-medium">Pengguna</span>
+                        <span>Pengguna</span>
                     </a>
                 </li>
             @endif
 
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('alat.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('alat.index') }}">
-                    <i class="bi bi-tools fs-5"></i>
-                    <span class="fw-medium">Alat</span>
-                </a>
-            </li>
+            {{-- Menu Alat HANYA TAMPIL SETELAH LOGIN --}}
+            @if ($currentUser)
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('alat.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ route('alat.index') }}">
+                        <i class="bi bi-tools fs-5"></i>
+                        <span>Alat</span>
+                    </a>
+                </li>
+            @endif
 
-            {{-- Menu Aspirasi --}}
-            <li class="nav-item">
-                @php
-                    $aspirasiRoute = ($currentUser && isset($currentUser->role) && $currentUser->role === 'admin') 
-                        ? route('admin.aspirasi.index') 
-                        : route('aspirasi.index');
-                @endphp
-                <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('aspirasi.index', 'admin.aspirasi.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ $aspirasiRoute }}">
-                    <i class="bi bi-chat-left-text fs-5"></i>
-                    <span class="fw-medium">Aspirasi</span>
-                </a>
-            </li>
+            {{-- Menu Aspirasi HANYA TAMPIL SETELAH LOGIN --}}
+            @if ($currentUser)
+                <li class="nav-item">
+                    @php
+                        $aspirasiRoute = (isset($currentUser->role) && $currentUser->role === 'admin') 
+                            ? route('admin.aspirasi.index') 
+                            : route('aspirasi.index');
+                    @endphp
+                    <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('aspirasi.index', 'admin.aspirasi.index') ? 'active fw-semibold' : 'text-body hover-bg' }}" href="{{ $aspirasiRoute }}">
+                        <i class="bi bi-chat-left-text fs-5"></i>
+                        <span>Aspirasi</span>
+                    </a>
+                </li>
+            @endif
 
             @if ($currentUser)
-                <div class="my-2 border-top"></div>
+                <li class="nav-item mt-2 pt-2 border-top">
+                    <small class="text-uppercase text-body-secondary fw-bold px-2 mb-1 d-block" style="font-size: 0.68rem; letter-spacing: 0.5px;">Panel Kontrol</small>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2.5 px-3 py-2.5 rounded-3 {{ is_route('admin.dashboard', 'dashboard', 'siswa.dashboard') ? 'active fw-semibold' : 'text-body hover-bg' }}"
+                    <a class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 {{ is_route('admin.dashboard', 'dashboard', 'siswa.dashboard') ? 'active fw-semibold' : 'text-body hover-bg' }}"
                        href="{{ isset($currentUser->role) && $currentUser->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}">
                         <i class="bi bi-speedometer2 fs-5"></i>
-                        <span class="fw-medium">Dashboard</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
             @endif
@@ -136,8 +149,8 @@
         {{-- Footer Sidebar --}}
         <div class="border-top pt-3 mt-3">
             @if ($currentUser)
-                <div class="mb-3 px-2 d-flex align-items-center gap-2">
-                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                <div class="mb-3 px-2 d-flex align-items-center gap-3">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
                         <i class="bi bi-person-fill fs-5"></i>
                     </div>
                     <div class="overflow-hidden">

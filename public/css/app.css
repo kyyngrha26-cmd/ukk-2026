@@ -1,18 +1,18 @@
 /*
 | Lapisan tema di atas Bootstrap 5.
-| Skema Warna: Electric Indigo / Vibrant Purple
+| Skema Warna: Soft Lavender / Light Purple
 */
 
 /* --------------------------------------------------
  * 1. Variabel Mode Terang (Light Mode - Default)
  * -------------------------------------------------- */
 :root {
-    --brand: #6366f1;             /* Electric Indigo - Modern, cerah, & profesional */
-    --brand-dark: #4f46e5;        /* Indigo gelap untuk state hover/active */
-    --brand-subtle: #e0e7ff;      /* Indigo lembut untuk background badge/step */
-    --brand-text: #3730a3;        /* Teks kontras tinggi di atas bg-subtle */
+    --brand: #a855f7;             /* Soft Lavender Purple - Cerah & lembut */
+    --brand-dark: #9333ea;        /* Ungu sedikit lebih gelap untuk hover/active */
+    --brand-subtle: #f3e8ff;      /* Ungu pastel sangat muda untuk background badge/step */
+    --brand-text: #6b21a8;        /* Teks kontras tinggi di atas bg-subtle */
     
-    --brand-mark-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --brand-mark-bg: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
     --brand-mark-color: #ffffff;
 }
 
@@ -20,13 +20,13 @@
  * 2. Variabel Mode Gelap (Dark Mode - Bootstrap Data Attribute)
  * -------------------------------------------------- */
 [data-bs-theme="dark"] {
-    --brand: #818cf8;             /* Indigo cerah ber-neon lembut agar kontras di latar gelap */
-    --brand-dark: #6366f1;
-    --brand-subtle: rgba(99, 102, 241, 0.2); /* Transparan indigo elegan */
-    --brand-text: #c7d2fe;
+    --brand: #c084fc;             /* Ungu muda terang neon lembut untuk latar gelap */
+    --brand-dark: #a855f7;
+    --brand-subtle: rgba(168, 85, 247, 0.2); /* Transparan ungu muda */
+    --brand-text: #e9d5ff;
     
-    --brand-mark-bg: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-    --brand-mark-color: #ffffff;
+    --brand-mark-bg: linear-gradient(135deg, #d8b4fe 0%, #c084fc 100%);
+    --brand-mark-color: #1e1b4b;  /* Teks gelap agar kontras di latar gradient terang */
 }
 
 body {
@@ -47,7 +47,7 @@ body {
     color: var(--brand-mark-color);
     font-size: 15px;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
     transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
@@ -115,7 +115,7 @@ body {
     height: 3px;
     border-radius: 3px;
     background: var(--brand);
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
 }
 
 /* --------------------------------------------------
@@ -133,10 +133,10 @@ body {
 .btn-brand:hover,
 .btn-brand:focus,
 .btn-brand:active {
-    background: linear-gradient(135deg, var(--brand-dark) 0%, #3730a3 100%);
+    background: linear-gradient(135deg, var(--brand-dark) 0%, #7e22ce 100%);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 8px 22px rgba(168, 85, 247, 0.4);
 }
 
 .btn-outline-brand {
@@ -152,7 +152,7 @@ body {
     border-color: var(--brand);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 18px rgba(168, 85, 247, 0.3);
 }
 
 .text-brand { 
@@ -169,7 +169,7 @@ body {
     font-weight: 600;
     padding: 0.45em 0.85em;
     border-radius: 50rem;
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    border: 1px solid rgba(168, 85, 247, 0.25);
 }
 
 /* --------------------------------------------------
@@ -184,12 +184,12 @@ body {
 
 .card-info:hover {
     transform: translateY(-5px);
-    box-shadow: 0 14px 30px rgba(99, 102, 241, 0.15) !important;
+    box-shadow: 0 14px 30px rgba(168, 85, 247, 0.18) !important;
     border-color: var(--brand) !important;
 }
 
 [data-bs-theme="dark"] .card-info:hover {
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(129, 140, 248, 0.2) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(192, 132, 252, 0.25) !important;
 }
 
 .step-number,
@@ -302,15 +302,15 @@ code.inline {
 }
 
 .demo-box-alt {
-    background: rgba(139, 92, 246, 0.1);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    color: #8b5cf6;
+    background: rgba(192, 132, 252, 0.15);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    color: #a855f7;
 }
 
 [data-bs-theme="dark"] .demo-box-alt {
-    background: rgba(167, 139, 250, 0.15);
-    border-color: rgba(167, 139, 250, 0.3);
-    color: #c4b5fd;
+    background: rgba(216, 180, 254, 0.15);
+    border-color: rgba(216, 180, 254, 0.4);
+    color: #e9d5ff;
 }
 
 /* Halaman Error */
@@ -318,7 +318,7 @@ code.inline {
     font-size: 76px;
     font-weight: 900;
     line-height: 1;
-    background: linear-gradient(135deg, var(--brand) 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, #c084fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
