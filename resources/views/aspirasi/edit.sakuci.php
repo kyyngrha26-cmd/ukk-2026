@@ -1,199 +1,164 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Aspirasi')
+@section('title', 'Edit Aspirasi -- ' . config('app.name'))
 
+@section('content')
 @php
-    $currentUser = class_exists('\App\Models\User') && method_exists('\App\Models\User', 'current')
-        ? \App\Models\User::current()
-        : auth()->user();
-    
-    // Tentukan route update & cancel berdasarkan role user yang sedang login
+    $currentUser = \App\Models\User::current();
     $isAdmin = $currentUser && isset($currentUser->role) && $currentUser->role === 'admin';
-    $updateRoute = $isAdmin 
-        ? route('admin.aspirasi.update', ['id_aspirasi' => $aspirasi->id_aspirasi]) 
-        : route('aspirasi.update', ['id_aspirasi' => $aspirasi->id_aspirasi]);
+    $updateRoute = $isAdmin ? route('admin.aspirasi.update', ['id_aspirasi' => $aspirasi->id_aspirasi]) : route('aspirasi.update', ['id_aspirasi' => $aspirasi->id_aspirasi]);
     $cancelRoute = $isAdmin ? route('admin.aspirasi.index') : route('aspirasi.index');
 @endphp
 
-@push('styles')
-<style>
-    .hover-shadow {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .hover-shadow:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Penyesuaian Input Group Icon agar fleksibel di Dark/Light Mode */
-    .input-group-text-theme {
-        background-color: var(--bs-tertiary-bg);
-        color: var(--bs-secondary-color);
-        border-color: var(--bs-border-color);
-    }
-</style>
-@endpush
-
-@section('content')
-<div class="container-fluid py-2">
-    
-    {{-- Header & Tombol Kembali --}}
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-        <div>
-            <h2 class="fw-bold mb-1 text-body">Edit Aspirasi</h2>
-            <p class="text-body-secondary small mb-0">Perbarui rincian laporan aspirasi atau status pemrosesan.</p>
-        </div>
-        <a href="{{ $cancelRoute }}" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 fw-semibold px-3 py-2 rounded-3 shadow-sm">
-            <i class="bi bi-arrow-left"></i>
-            <span>Kembali</span>
-        </a>
-    </div>
-
-    {{-- Form Card --}}
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-lg-10 col-xl-8">
-            <div class="card border bg-body-tertiary shadow-sm rounded-3">
-                <div class="card-header bg-body border-bottom py-3 px-4">
-                    <h5 class="card-title fw-bold text-body mb-0 d-flex align-items-center gap-2">
-                        <i class="bi bi-pencil-square text-primary"></i> Form Perubahan Aspirasi
-                    </h5>
-                </div>
-                
-                <div class="card-body p-4 bg-body">
+        <div class="col-lg-8">
+            
+            {{-- Breadcrumb & Header --}}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{ $cancelRoute }}" class="text-decoration-none">Daftar Aspirasi</a></li>
+                    <li class="breadcrumb-item active text-body-secondary" aria-current="page">Edit Aspirasi</li>
+                </ol>
+            </nav>
+            
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 fw-bold text-body mb-0">Edit Data Aspirasi</h1>
+            </div>
+
+            {{-- Card Form --}}
+            <div class="card border border-secondary-subtle shadow-sm rounded-4 bg-body-tertiary">
+                <div class="card-body p-4 p-md-5">
                     <form action="{{ $updateRoute }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        {{-- 1. Kategori --}}
+                        {{-- Kategori --}}
                         <div class="mb-3">
-                            <label for="id_kategori" class="form-label fw-semibold text-body">
-                                Kategori <span class="text-danger">*</span>
-                            </label>
+                            <label for="id_kategori" class="form-label fw-semibold text-body">Kategori Aspirasi</label>
                             <div class="input-group">
-                                <span class="input-group-text input-group-text-theme"><i class="bi bi-tag-fill"></i></span>
-                                <select name="id_kategori" id="id_kategori" class="form-select bg-body text-body border-secondary-subtle @error('id_kategori') is-invalid @enderror" required>
-                                    <option value="" class="bg-body text-body">-- Pilih Kategori --</option>
+                                <span class="input-group-text bg-body-secondary border-secondary-subtle text-body-secondary">
+                                    <i class="bi bi-tags"></i>
+                                </span>
+                                <select name="id_kategori" 
+                                        id="id_kategori" 
+                                        class="form-select bg-body border-secondary-subtle text-body @error('id_kategori') is-invalid @enderror" 
+                                        required>
+                                    <option value="">-- Pilih Kategori --</option>
                                     @foreach($kategori as $kat)
-                                        <option value="{{ $kat->id_kategori }}" class="bg-body text-body" {{ old('id_kategori', $aspirasi->id_kategori) == $kat->id_kategori ? 'selected' : '' }}>
+                                        <option value="{{ $kat->id_kategori }}" 
+                                            {{ old('id_kategori', $aspirasi->id_kategori) == $kat->id_kategori ? 'selected' : '' }}>
                                             {{ $kat->nama_kategori }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
-                            @error('id_kategori')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- 2. Judul --}}
-                        <div class="mb-3">
-                            <label for="judul" class="form-label fw-semibold text-body">
-                                Judul Aspirasi <span class="text-danger">*</span>
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text input-group-text-theme"><i class="bi bi-type-h1"></i></span>
-                                <input type="text" class="form-control bg-body text-body border-secondary-subtle @error('judul') is-invalid @enderror" id="judul" name="judul" value="{{ old('judul', $aspirasi->judul) }}" placeholder="Masukkan judul aspirasi..." required>
-                            </div>
-                            @error('judul')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- 3. Deskripsi --}}
-                        <div class="mb-3">
-                            <label for="deskripsi" class="form-label fw-semibold text-body">
-                                Deskripsi Detail <span class="text-danger">*</span>
-                            </label>
-                            <textarea class="form-control bg-body text-body border-secondary-subtle @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="5" placeholder="Jelaskan secara rinci permasalahan..." required>{{ old('deskripsi', $aspirasi->deskripsi) }}</textarea>
-                            @error('deskripsi')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- 4. Status Aspirasi (Khusus Admin) --}}
-                        @if($isAdmin)
-                            <div class="mb-3">
-                                <label for="status" class="form-label fw-semibold text-body">
-                                    Status Aspirasi <span class="text-danger">*</span>
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text input-group-text-theme"><i class="bi bi-flag-fill"></i></span>
-                                    <select name="status" id="status" class="form-select bg-body text-body border-secondary-subtle @error('status') is-invalid @enderror" required>
-                                        <option value="Pending" class="bg-body text-body" {{ old('status', $aspirasi->status) == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                        <option value="Proses" class="bg-body text-body" {{ old('status', $aspirasi->status) == 'Proses' ? 'selected' : '' }}>Proses</option>
-                                        <option value="Selesai" class="bg-body text-body" {{ old('status', $aspirasi->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @error('id_kategori')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
+
+                        {{-- Judul --}}
+                        <div class="mb-3">
+                            <label for="judul" class="form-label fw-semibold text-body">Judul Aspirasi</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-body-secondary border-secondary-subtle text-body-secondary">
+                                    <i class="bi bi-type-h1"></i>
+                                </span>
+                                <input type="text" 
+                                       class="form-control bg-body border-secondary-subtle text-body @error('judul') is-invalid @enderror" 
+                                       id="judul" 
+                                       name="judul" 
+                                       value="{{ old('judul', $aspirasi->judul) }}" 
+                                       placeholder="Tuliskan judul aspirasi"
+                                       required>
+                                @error('judul')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Deskripsi --}}
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label fw-semibold text-body">Deskripsi Detail</label>
+                            <textarea class="form-control bg-body border-secondary-subtle text-body @error('deskripsi') is-invalid @enderror" 
+                                      id="deskripsi" 
+                                      name="deskripsi" 
+                                      rows="4" 
+                                      placeholder="Jelaskan detail aspirasi atau keluhan Anda..."
+                                      required>{{ old('deskripsi', $aspirasi->deskripsi) }}</textarea>
+                            @error('deskripsi')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Foto Bukti --}}
+                        <div class="mb-3">
+                            <label for="foto" class="form-label fw-semibold text-body">Foto Bukti</label>
+                            
+                            @if($aspirasi->foto)
+                                <div class="mb-3 p-2 border border-secondary-subtle rounded-3 bg-body d-inline-block">
+                                    <div class="text-body-secondary fs-7 mb-1"><i class="bi bi-image me-1"></i> Foto Saat Ini:</div>
+                                    <img src="{{ asset('uploads/aspirasi/' . $aspirasi->foto) }}" alt="Foto Bukti" class="rounded-2 object-fit-cover" style="max-height: 140px; width: auto;">
+                                </div>
+                            @endif
+
+                            <div class="input-group">
+                                <span class="input-group-text bg-body-secondary border-secondary-subtle text-body-secondary">
+                                    <i class="bi bi-paperclip"></i>
+                                </span>
+                                <input type="file" 
+                                       class="form-control bg-body border-secondary-subtle text-body @error('foto') is-invalid @enderror" 
+                                       id="foto" 
+                                       name="foto" 
+                                       accept="image/*">
+                                @error('foto')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-text text-body-secondary fs-7 mt-1">
+                                <i class="bi bi-info-circle me-1"></i> Biarkan kosong jika tidak ingin mengubah foto bukti.
+                            </div>
+                        </div>
+
+                        {{-- Status Aspirasi (Khusus Admin) --}}
+                        @if($isAdmin)
+                            <div class="mb-4">
+                                <label for="status" class="form-label fw-semibold text-body">Status Aspirasi</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-body-secondary border-secondary-subtle text-body-secondary">
+                                        <i class="bi bi-flag"></i>
+                                    </span>
+                                    <select name="status" 
+                                            id="status" 
+                                            class="form-select bg-body border-secondary-subtle text-body @error('status') is-invalid @enderror" 
+                                            required>
+                                        <option value="Pending" {{ old('status', $aspirasi->status) == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="Proses" {{ old('status', $aspirasi->status) == 'Proses' ? 'selected' : '' }}>Proses</option>
+                                        <option value="Selesai" {{ old('status', $aspirasi->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                         @endif
 
-                        {{-- 5. Pratinjau & Ubah Foto --}}
-                        <div class="mb-4">
-                            <label for="foto" class="form-label fw-semibold text-body">Foto Bukti Pendukung</label>
-                            
-                            <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
-                                {{-- Foto Saat Ini --}}
-                                @if($aspirasi->foto)
-                                    <div class="text-center">
-                                        <span class="d-block text-body-secondary small mb-1 fw-semibold">Foto Saat Ini:</span>
-                                        <a href="{{ asset('uploads/aspirasi/' . $aspirasi->foto) }}" target="_blank">
-                                            <img src="{{ asset('uploads/aspirasi/' . $aspirasi->foto) }}" alt="Foto Bukti Saat Ini" class="rounded border shadow-sm p-1" style="width: 110px; height: 110px; object-fit: cover;">
-                                        </a>
-                                    </div>
-                                @endif
-
-                                {{-- Live Preview Foto Baru --}}
-                                <div id="preview-container" class="text-center d-none">
-                                    <span class="d-block text-primary small mb-1 fw-semibold">Pratinjau Baru:</span>
-                                    <img id="img-preview" src="#" alt="Pratinjau Baru" class="rounded border border-primary shadow-sm p-1" style="width: 110px; height: 110px; object-fit: cover;">
-                                </div>
-                            </div>
-
-                            <input type="file" class="form-control bg-body text-body border-secondary-subtle @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*" onchange="previewImage(event)">
-                            <div class="form-text text-body-secondary">
-                                <i class="bi bi-info-circle me-1"></i> Biarkan kosong jika tidak ingin mengganti foto bukti.
-                            </div>
-                            @error('foto')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Action Buttons --}}
-                        <div class="pt-3 border-top d-flex gap-2 justify-content-end">
-                            <a href="{{ $cancelRoute }}" class="btn btn-outline-secondary px-4 rounded-3 fw-semibold">Batal</a>
-                            <button type="submit" class="btn btn-primary px-4 rounded-3 fw-semibold d-inline-flex align-items-center gap-2 shadow-sm hover-shadow">
-                                <i class="bi bi-floppy-fill"></i>
-                                <span>Simpan Perubahan</span>
+                        {{-- Tombol Aksi --}}
+                        <div class="d-flex align-items-center justify-content-end gap-2 pt-3 border-top border-secondary-subtle">
+                            <a href="{{ $cancelRoute }}" class="btn btn-outline-secondary rounded-pill px-4">
+                                Batal
+                            </a>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4 d-inline-flex align-items-center gap-2 shadow-sm">
+                                <i class="bi bi-check-circle"></i> Perbarui
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-    function previewImage(event) {
-        const input = event.target;
-        const previewContainer = document.getElementById('preview-container');
-        const imgPreview = document.getElementById('img-preview');
-
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imgPreview.src = e.target.result;
-                previewContainer.classList.remove('d-none');
-            }
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            previewContainer.classList.add('d-none');
-        }
-    }
-</script>
-@endpush

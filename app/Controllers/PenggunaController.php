@@ -49,6 +49,11 @@ class PenggunaController extends Controller
     public function edit($pengguna)
     {
         $siswa = Siswa::where('id_siswa', $pengguna)->first();
+        
+        if (!$siswa) {
+            return redirect()->route('pengguna.index')->with('error', 'Data pengguna tidak ditemukan.');
+        }
+
         return view('pengguna.edit', compact('siswa'));
     }
 
@@ -60,21 +65,49 @@ class PenggunaController extends Controller
             'kelas' => 'required|string|max:10',
         ]);
 
-        $user = Siswa::where('id_siswa', $pengguna)->first();
-        $user->update([
+        $siswa = Siswa::where('id_siswa', $pengguna)->first();
+
+        if (!$siswa) {
+            return redirect()->route('pengguna.index')->with('error', 'Data pengguna tidak ditemukan.');
+        }
+
+        // Update data siswa
+        $siswa->update([
             'nama'  => $request->nama,
             'nis'   => $request->nis,
             'kelas' => $request->kelas,
         ]);
 
-        return redirect()->route('pengguna.index');
+        // Update username di tabel users
+        if ($siswa->id_user) {
+            User::where('id', $siswa->id_user)->update([
+                'username' => $request->nis
+            ]);
+        }
+
+        return redirect()->route('pengguna.index')->with('success', 'Data berhasil diperbarui');
     }
 
-   public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        // 1. Cari data siswa berdasarkan id_siswa menggunakan first()
+        $siswa = Siswa::where('id_siswa', $id)->first();
 
-        return redirect()->route('pengguna.index')->with('success', 'pengguna berhasil dihapus.');
+        if (!$siswa) {
+            return redirect()->route('pengguna.index')->with('error', 'Data pengguna tidak ditemukan.');
+        }
+
+        // 2. Simpan id_user terkait
+        $idUser = $siswa->id_user;
+
+        // 3. Hapus data siswa
+        $siswa->delete();
+
+        // 4. Hapus akun user terkait jika ada
+        if ($idUser) {
+            User::where('id', $idUser)->delete();
+        }
+
+        return redirect()->route('pengguna.index')->with('success', 'Data pengguna berhasil dihapus.');
     }
 }
