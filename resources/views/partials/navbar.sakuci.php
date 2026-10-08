@@ -15,7 +15,7 @@
 <header class="navbar navbar-expand bg-body border-bottom sticky-top shadow-sm py-2 px-3">
     <div class="container-fluid">
         <div class="d-flex align-items-center gap-2">
-            {{-- Tombol Buka Sidebar Menu --}}
+            {{-- Tombol Buka Sidebar Menu (otomatis hilang di desktop lewat CSS) --}}
             <button class="btn btn-outline-brand border-0 d-flex align-items-center justify-content-center p-2 rounded-3 text-body" 
                     type="button" 
                     data-bs-toggle="offcanvas" 
@@ -63,8 +63,8 @@
     </div>
 </header>
 
-{{-- Drawer Sidebar Offcanvas --}}
-<div class="offcanvas offcanvas-start bg-body text-body border-end" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="width: 280px;">
+{{-- Drawer Sidebar Offcanvas (permanen di desktop, drawer di mobile) --}}
+<div class="offcanvas offcanvas-start bg-body text-body border-end" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" data-bs-scroll="true" style="width: 280px;">
     
     {{-- Header Sidebar --}}
     <div class="offcanvas-header border-bottom p-3">

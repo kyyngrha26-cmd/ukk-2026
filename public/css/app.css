@@ -322,3 +322,70 @@ code.inline {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+ /* --------------------------------------------------
+ * 9. Sidebar (Offcanvas) - Menu Aktif & Mode Permanen
+ * -------------------------------------------------- */
+
+/* Link menu sidebar */
+.sidebar-link {
+    color: var(--bs-body-color);
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background-color: var(--brand-subtle);
+    color: var(--brand-text);
+    transform: translateX(3px);
+}
+
+/* Menu yang sedang aktif (menimpa warna biru bawaan nav-pills) */
+.nav-pills .sidebar-link.active,
+.nav-pills .show > .sidebar-link {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 6px 16px rgba(168, 85, 247, 0.35);
+}
+
+.nav-pills .sidebar-link.active:hover {
+    transform: none;
+    color: #ffffff;
+}
+
+[data-bs-theme="dark"] .nav-pills .sidebar-link.active {
+    color: #1e1b4b;
+}
+
+/* Sidebar selalu terbuka di desktop (>= 992px) */
+@media (min-width: 992px) {
+
+    #sidebarMenu {
+        visibility: visible !important;
+        transform: none !important;
+        transition: none !important;
+        z-index: 1035;
+        width: 280px;
+    }
+
+    /* Geser konten supaya tidak tertutup sidebar */
+    body {
+        padding-left: 280px;
+    }
+
+    /* Tombol hamburger & tombol close tidak diperlukan */
+    [data-bs-target="#sidebarMenu"],
+    #sidebarMenu .btn-close {
+        display: none !important;
+    }
+
+    .offcanvas-backdrop {
+        display: none !important;
+    }
+
+    /* Brand di topbar disembunyikan karena sudah ada di sidebar */
+    header .navbar-brand {
+        display: none !important;
+    }
+}
